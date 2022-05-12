@@ -2,6 +2,13 @@
 //            INSTRUCTIONS
 //       ***********************
 
+let board = [
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""]
+]
+
+
 // 1. Read the code below one block at a time.
 // 2. Look for the @TODOs, and figure out how to fix them.
     // next to each @TODO you will find tasks that need to be finished
@@ -44,22 +51,21 @@ const addMarker = (id) => {
   console.log(`Therefore, a  "${currentMarker}"  should be placed in the square with the id:  ${id}`)
   
   // @TODO-2: Build a line of code that will set the innerHTML property of the element that was clicked to the "currentMarker"
-  if(document.getElementById(id).innerHTML = currentMarker)
+  document.getElementById(id).innerHTML = currentMarker
   // @TODO-2.5: MIX & MATCH, You will need the following pieces of code to build that line:
   // = currentMarker
   // .getElementById(id)
   // document
   // .innerHTML 
 
-  changeMarker()
+
+  const row = parseInt(id.charAt(0))
+  const column = parseInt(id.charAt(2))
+  board[row][column] = currentMarker
+  console.log(board)
+  checkForWin()
+
 }
-
-
-
-
-
-
-
 
 
 
@@ -83,6 +89,11 @@ const changeMarker = () => {
 
 // This "resetBoard" function is called when the user clicks on the "Restart" button.
 const resetBoard = () => {
+   board = [
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""]
+]
   
   // @TODO-3: To make your "Restart" button work you'll need to build a line of code here that:
       // collects all of the "td" elements into an HTML Collection: https://www.w3schools.com/jsref/dom_obj_htmlcollection.asp  
@@ -104,3 +115,58 @@ const resetBoard = () => {
     squares[i].innerHTML = null
   }  
 }
+
+// win logic starts here
+
+const checkForWin = () => {
+  if(horizontalWin() || verticalWin() || diagonalWin()) {
+    window.alert(`Player ${currentMarker} won!`)
+  } else {
+    changeMarker()
+  }
+}
+
+const horizontalWin = () => {
+   if((board[0][0] == "X" && board[0][1] == "X" && board[0][2] == "X") 
+   || (board[0][0] == "O" && board[0][1] == "O" && board[0][2] == "O")
+  )
+  return true
+  if((board[1][0] == "X" && board[1][1] == "X" && board[1][2] == "X") 
+  || (board[1][0] == "O" && board[1][1] == "O" && board[1][2] == "O")
+  )
+  return true
+  if((board[2][0] == "X" && board[2][1] == "X" && board[2][2] == "X") 
+  || (board[2][0] == "O" && board[2][1] == "O" && board[2][2] == "O")
+  )
+  return true
+
+}
+
+const verticalWin = () => {
+  if((board[0][0] == "X" && board[1][0] == "X" && board[2][0] == "X") 
+  || (board[0][0] == "O" && board[1][0] == "O" && board[2][0] == "O")
+  )
+  return true
+  if((board[0][1] == "X" && board[1][1] == "X" && board[2][1] == "X") 
+  || (board[0][1] == "O" && board[1][1] == "O" && board[2][1] == "O")
+  )
+  return true
+  if((board[0][2] == "X" && board[1][2] == "X" && board[2][2] == "X") 
+  || (board[0][2] == "O" && board[1][2] == "O" && board[2][2] == "O")
+  )
+  return true
+
+}
+
+const diagonalWin = () => {
+  if((board[0][0] == "X" && board[1][1] == "X" && board[2][2] == "X") 
+  || (board[0][0] == "O" && board[1][1] == "O" && board[2][2] == "O")
+  )
+  return true
+  if((board[0][2] == "X" && board[1][1] == "X" && board[2][0] == "X") 
+  || (board[0][2] == "O" && board[1][1] == "O" && board[2][0] == "O")
+  )
+  return true
+
+}
+
